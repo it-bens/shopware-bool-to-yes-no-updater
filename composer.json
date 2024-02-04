@@ -1,0 +1,62 @@
+{
+  "name": "it-bens/shopware-bool-to-yes-no-updater",
+  "description": "Shopware package to update translations for boolean values to yes/no",
+  "type": "package",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Martin Bens",
+      "email": "martin.bens@it-bens.de"
+    }
+  ],
+  "require": {
+    "php": "^8.1",
+    "it-bens/simple-words-translator": "^0.1",
+    "shopware/core": "^6.5"
+  },
+  "require-dev": {
+    "captainhook/captainhook": "^5.21",
+    "captainhook/plugin-composer": "^5.3",
+    "phpstan/extension-installer": "^1.1",
+    "phpstan/phpstan": "^1.10",
+    "phpstan/phpstan-phpunit": "^1.3",
+    "phpunit/phpunit": "^10.5",
+    "symplify/coding-standard": "^12.0",
+    "symplify/easy-coding-standard": "^12.1"
+  },
+  "config": {
+    "allow-plugins": {
+      "phpstan/extension-installer": true,
+      "captainhook/plugin-composer": true,
+      "symfony/runtime": true
+    },
+    "optimize-autoloader": true,
+    "preferred-install": {
+      "*": "dist"
+    },
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "ITB\\ShopwareBoolToYesNoUpdater\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ITB\\ShopwareBoolToYesNoUpdater\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "phpstan": {
+      "includes": [
+        "extension.neon"
+      ]
+    }
+  },
+  "scripts": {
+    "check-style": "./vendor/bin/ecs --config=ecs.php check src tests",
+    "lint-style": "./vendor/bin/ecs --config=ecs.php check src tests --fix",
+    "static-analysis": "./vendor/bin/phpstan analyse --configuration phpstan.neon",
+    "unit-test": "./vendor/bin/phpunit --configuration phpunit.xml.dist"
+  }
+}
