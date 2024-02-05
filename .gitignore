@@ -1,0 +1,7 @@
+/.idea
+/.php-cs-fixer.cache
+/coverage/
+/vendor/
+/.phpunit.result.cache
+/phpmd_result.xml
+/composer.lock
