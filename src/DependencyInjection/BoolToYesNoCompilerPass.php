@@ -6,6 +6,7 @@ namespace ITB\ShopwareBoolToYesNoUpdater\DependencyInjection;
 
 use Doctrine\DBAL\Connection;
 use ITB\ShopwareBoolToYesNoUpdater\BoolToYesNoUpdater;
+use ITB\ShopwareBoolToYesNoUpdater\BoolToYesNoUpdaterInterface;
 use ITB\ShopwareBoolToYesNoUpdater\LanguagesIdAndNameFetcher;
 use ITB\ShopwareBoolToYesNoUpdater\LanguagesIdAndNameFetcherInterface;
 use ITB\ShopwareBoolToYesNoUpdater\YesNoTranslationCaseWhenThenBuilder;
@@ -43,6 +44,6 @@ final class BoolToYesNoCompilerPass implements CompilerPassInterface
             '$yesNoTranslationCaseWhenThenBuilder' => new Reference(YesNoTranslationCaseWhenThenBuilderInterface::class),
         ]);
         $container->setDefinition(BoolToYesNoUpdater::class, $boolToYesNoUpdaterDefinition);
-        $container->setalias(BoolToYesNoUpdater::class, BoolToYesNoUpdater::class);
+        $container->setalias(BoolToYesNoUpdaterInterface::class, BoolToYesNoUpdater::class);
     }
 }
