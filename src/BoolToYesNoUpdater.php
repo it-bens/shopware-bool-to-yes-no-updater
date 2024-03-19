@@ -7,14 +7,14 @@ namespace ITB\ShopwareBoolToYesNoUpdater;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use ITB\ShopwareBoolToYesNoUpdater\CaseWhenThenBuilder\YesNoTranslationCaseWhenThenBuilderInterface;
-use ITB\ShopwareBoolToYesNoUpdater\Language\LanguagesIdAndNameFetcherInterface;
+use ITB\ShopwareBoolToYesNoUpdater\Language\AllLanguagesIdAndNameFetcherInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Doctrine\RetryableQuery;
 
 final class BoolToYesNoUpdater implements BoolToYesNoUpdaterInterface
 {
     public function __construct(
         private readonly Connection $connection,
-        private readonly LanguagesIdAndNameFetcherInterface $languagesIdAndNameFetcher,
+        private readonly AllLanguagesIdAndNameFetcherInterface $languagesIdAndNameFetcher,
         private readonly YesNoTranslationCaseWhenThenBuilderInterface $yesNoTranslationCaseWhenThenBuilder,
     ) {
     }

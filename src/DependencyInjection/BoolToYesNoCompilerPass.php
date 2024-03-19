@@ -9,8 +9,10 @@ use ITB\ShopwareBoolToYesNoUpdater\BoolToYesNoUpdater;
 use ITB\ShopwareBoolToYesNoUpdater\BoolToYesNoUpdaterInterface;
 use ITB\ShopwareBoolToYesNoUpdater\CaseWhenThenBuilder\YesNoTranslationCaseWhenThenBuilder;
 use ITB\ShopwareBoolToYesNoUpdater\CaseWhenThenBuilder\YesNoTranslationCaseWhenThenBuilderInterface;
-use ITB\ShopwareBoolToYesNoUpdater\Language\LanguagesIdAndNameFetcher;
-use ITB\ShopwareBoolToYesNoUpdater\Language\LanguagesIdAndNameFetcherInterface;
+use ITB\ShopwareBoolToYesNoUpdater\Language\AllLanguagesIdAndNameFetcher;
+use ITB\ShopwareBoolToYesNoUpdater\Language\AllLanguagesIdAndNameFetcherInterface;
+use ITB\ShopwareBoolToYesNoUpdater\Language\EntityTranslationsLanguagesIdAndNameFetcher;
+use ITB\ShopwareBoolToYesNoUpdater\Language\EntityTranslationsLanguagesIdAndNameFetcherInterface;
 use ITB\SimpleWordsTranslator\TranslatorByName;
 use ITB\SimpleWordsTranslator\TranslatorByNameInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -26,11 +28,22 @@ final class BoolToYesNoCompilerPass implements CompilerPassInterface
         $container->setDefinition(TranslatorByName::class, $translatorByNameDefinition);
         $container->setalias(TranslatorByNameInterface::class, TranslatorByName::class);
 
-        $languageIdAndNameFetcherDefinition = new Definition(LanguagesIdAndNameFetcher::class, [
+        $allLanguageIdAndNameFetcherDefinition = new Definition(AllLanguagesIdAndNameFetcher::class, [
             '$connection' => new Reference(Connection::class),
         ]);
-        $container->setDefinition(LanguagesIdAndNameFetcher::class, $languageIdAndNameFetcherDefinition);
-        $container->setalias(LanguagesIdAndNameFetcherInterface::class, LanguagesIdAndNameFetcher::class);
+        $container->setDefinition(AllLanguagesIdAndNameFetcher::class, $allLanguageIdAndNameFetcherDefinition);
+        $container->setalias(AllLanguagesIdAndNameFetcherInterface::class, AllLanguagesIdAndNameFetcher::class);
+        $entityTranslationsLanguageIdAndNameFetcherDefinition = new Definition(EntityTranslationsLanguagesIdAndNameFetcher::class, [
+            '$connection' => new Reference(Connection::class),
+        ]);
+        $container->setDefinition(
+            EntityTranslationsLanguagesIdAndNameFetcher::class,
+            $entityTranslationsLanguageIdAndNameFetcherDefinition
+        );
+        $container->setalias(
+            EntityTranslationsLanguagesIdAndNameFetcherInterface::class,
+            EntityTranslationsLanguagesIdAndNameFetcher::class
+        );
 
         $yesNoTranslationCaseWhenThenBuilderDefinition = new Definition(YesNoTranslationCaseWhenThenBuilder::class, [
             '$translator' => new Reference(TranslatorByNameInterface::class),
@@ -40,7 +53,7 @@ final class BoolToYesNoCompilerPass implements CompilerPassInterface
 
         $boolToYesNoUpdaterDefinition = new Definition(BoolToYesNoUpdater::class, [
             '$connection' => new Reference(Connection::class),
-            '$languagesIdAndNameFetcher' => new Reference(LanguagesIdAndNameFetcherInterface::class),
+            '$languagesIdAndNameFetcher' => new Reference(AllLanguagesIdAndNameFetcherInterface::class),
             '$yesNoTranslationCaseWhenThenBuilder' => new Reference(YesNoTranslationCaseWhenThenBuilderInterface::class),
         ]);
         $container->setDefinition(BoolToYesNoUpdater::class, $boolToYesNoUpdaterDefinition);

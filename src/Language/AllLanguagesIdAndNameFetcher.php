@@ -6,7 +6,7 @@ namespace ITB\ShopwareBoolToYesNoUpdater\Language;
 
 use Doctrine\DBAL\Connection;
 
-final class LanguagesIdAndNameFetcher implements LanguagesIdAndNameFetcherInterface
+final class AllLanguagesIdAndNameFetcher implements AllLanguagesIdAndNameFetcherInterface
 {
     public function __construct(
         private readonly Connection $connection,

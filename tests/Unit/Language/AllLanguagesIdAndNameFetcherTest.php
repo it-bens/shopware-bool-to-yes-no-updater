@@ -6,11 +6,11 @@ namespace ITB\ShopwareBoolToYesNoUpdater\Tests\Unit\Language;
 
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Result;
-use ITB\ShopwareBoolToYesNoUpdater\Language\LanguagesIdAndNameFetcher;
+use ITB\ShopwareBoolToYesNoUpdater\Language\AllLanguagesIdAndNameFetcher;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
-final class LanguageIdAndNameFetcherTest extends TestCase
+final class AllLanguagesIdAndNameFetcherTest extends TestCase
 {
     public static function fetchLanguagesIdAndNameProvider(): array
     {
@@ -57,7 +57,7 @@ final class LanguageIdAndNameFetcherTest extends TestCase
                 return $result;
             });
 
-        $languagesIdAndNameFetcher = new LanguagesIdAndNameFetcher($connection);
+        $languagesIdAndNameFetcher = new AllLanguagesIdAndNameFetcher($connection);
         $languages = $languagesIdAndNameFetcher->fetchLanguagesIdAndName();
         $this->assertSame($expectedLanguages, $languages);
     }

@@ -9,8 +9,10 @@ use ITB\ShopwareBoolToYesNoUpdater\BoolToYesNoUpdater;
 use ITB\ShopwareBoolToYesNoUpdater\BoolToYesNoUpdaterInterface;
 use ITB\ShopwareBoolToYesNoUpdater\CaseWhenThenBuilder\YesNoTranslationCaseWhenThenBuilder;
 use ITB\ShopwareBoolToYesNoUpdater\CaseWhenThenBuilder\YesNoTranslationCaseWhenThenBuilderInterface;
-use ITB\ShopwareBoolToYesNoUpdater\Language\LanguagesIdAndNameFetcher;
-use ITB\ShopwareBoolToYesNoUpdater\Language\LanguagesIdAndNameFetcherInterface;
+use ITB\ShopwareBoolToYesNoUpdater\Language\AllLanguagesIdAndNameFetcher;
+use ITB\ShopwareBoolToYesNoUpdater\Language\AllLanguagesIdAndNameFetcherInterface;
+use ITB\ShopwareBoolToYesNoUpdater\Language\EntityTranslationsLanguagesIdAndNameFetcher;
+use ITB\ShopwareBoolToYesNoUpdater\Language\EntityTranslationsLanguagesIdAndNameFetcherInterface;
 use ITB\ShopwareBoolToYesNoUpdater\Tests\Kernel;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -42,17 +44,31 @@ final class ServiceTest extends TestCase
     }
 
     #[DataProvider('containerProvider')]
-    public function testGetLanguageIdsAndNameFetcher(ContainerInterface $container): void
+    public function testGetAllLanguageIdsAndNameFetcher(ContainerInterface $container): void
     {
-        $languageIdsAndNameFetcher = $container->get(LanguagesIdAndNameFetcher::class);
-        self::assertInstanceOf(LanguagesIdAndNameFetcher::class, $languageIdsAndNameFetcher);
+        $languageIdsAndNameFetcher = $container->get(AllLanguagesIdAndNameFetcher::class);
+        self::assertInstanceOf(AllLanguagesIdAndNameFetcher::class, $languageIdsAndNameFetcher);
     }
 
     #[DataProvider('containerProvider')]
-    public function testGetLanguagesIdAndNameFetcherInterface(ContainerInterface $container): void
+    public function testGetAllLanguagesIdAndNameFetcherInterface(ContainerInterface $container): void
     {
-        $languageIdsAndNameFetcher = $container->get(LanguagesIdAndNameFetcherInterface::class);
-        self::assertInstanceOf(LanguagesIdAndNameFetcher::class, $languageIdsAndNameFetcher);
+        $languageIdsAndNameFetcher = $container->get(AllLanguagesIdAndNameFetcherInterface::class);
+        self::assertInstanceOf(AllLanguagesIdAndNameFetcher::class, $languageIdsAndNameFetcher);
+    }
+
+    #[DataProvider('containerProvider')]
+    public function testGetEntityTranslationsLanguagesIdAndNameFetcher(ContainerInterface $container): void
+    {
+        $languageIdsAndNameFetcher = $container->get(EntityTranslationsLanguagesIdAndNameFetcher::class);
+        self::assertInstanceOf(EntityTranslationsLanguagesIdAndNameFetcher::class, $languageIdsAndNameFetcher);
+    }
+
+    #[DataProvider('containerProvider')]
+    public function testGetEntityTranslationsLanguagesIdAndNameFetcherInterface(ContainerInterface $container): void
+    {
+        $languageIdsAndNameFetcher = $container->get(EntityTranslationsLanguagesIdAndNameFetcherInterface::class);
+        self::assertInstanceOf(EntityTranslationsLanguagesIdAndNameFetcher::class, $languageIdsAndNameFetcher);
     }
 
     #[DataProvider('containerProvider')]

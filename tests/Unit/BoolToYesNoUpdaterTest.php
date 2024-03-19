@@ -9,7 +9,7 @@ use Doctrine\DBAL\Connection;
 use Generator;
 use ITB\ShopwareBoolToYesNoUpdater\BoolToYesNoUpdater;
 use ITB\ShopwareBoolToYesNoUpdater\CaseWhenThenBuilder\YesNoTranslationCaseWhenThenBuilderInterface;
-use ITB\ShopwareBoolToYesNoUpdater\Language\LanguagesIdAndNameFetcherInterface;
+use ITB\ShopwareBoolToYesNoUpdater\Language\AllLanguagesIdAndNameFetcherInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -34,7 +34,7 @@ final class BoolToYesNoUpdaterTest extends TestCase
 
         $entityIds = ['3ca07a5bf2da4852bebe56cef47a7293', 'a9965144ffc54cf9b0dc5e4b0a0707d3'];
 
-        $languagesIdAndNameFetcher = self::createStub(LanguagesIdAndNameFetcherInterface::class);
+        $languagesIdAndNameFetcher = self::createStub(AllLanguagesIdAndNameFetcherInterface::class);
         $languagesIdAndNameFetcher->method('fetchLanguagesIdAndName')
             ->willReturn($languages);
 
@@ -102,7 +102,7 @@ final class BoolToYesNoUpdaterTest extends TestCase
      */
     #[DataProvider('updateProvider')]
     public function testUpdate(
-        LanguagesIdAndNameFetcherInterface $languagesIdAndNameFetcher,
+        AllLanguagesIdAndNameFetcherInterface $languagesIdAndNameFetcher,
         YesNoTranslationCaseWhenThenBuilderInterface $yesNoTranslationCaseWhenThenBuilder,
         string $entityTable,
         string $entityTranslationTable,

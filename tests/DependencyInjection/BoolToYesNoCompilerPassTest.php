@@ -10,8 +10,8 @@ use ITB\ShopwareBoolToYesNoUpdater\BoolToYesNoUpdaterInterface;
 use ITB\ShopwareBoolToYesNoUpdater\CaseWhenThenBuilder\YesNoTranslationCaseWhenThenBuilder;
 use ITB\ShopwareBoolToYesNoUpdater\CaseWhenThenBuilder\YesNoTranslationCaseWhenThenBuilderInterface;
 use ITB\ShopwareBoolToYesNoUpdater\DependencyInjection\BoolToYesNoCompilerPass;
-use ITB\ShopwareBoolToYesNoUpdater\Language\LanguagesIdAndNameFetcher;
-use ITB\ShopwareBoolToYesNoUpdater\Language\LanguagesIdAndNameFetcherInterface;
+use ITB\ShopwareBoolToYesNoUpdater\Language\AllLanguagesIdAndNameFetcher;
+use ITB\ShopwareBoolToYesNoUpdater\Language\AllLanguagesIdAndNameFetcherInterface;
 use ITB\SimpleWordsTranslator\TranslatorByName;
 use ITB\SimpleWordsTranslator\TranslatorByNameInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -35,8 +35,8 @@ final class BoolToYesNoCompilerPassTest extends TestCase
 
         self::assertSame(TranslatorByName::class, $container->getDefinition(TranslatorByName::class)->getClass());
         self::assertSame(TranslatorByName::class, (string) $container->getAlias(TranslatorByNameInterface::class));
-        self::assertSame(LanguagesIdAndNameFetcher::class, $container->getDefinition(LanguagesIdAndNameFetcher::class)->getClass());
-        self::assertSame(LanguagesIdAndNameFetcher::class, (string) $container->getAlias(LanguagesIdAndNameFetcherInterface::class));
+        self::assertSame(AllLanguagesIdAndNameFetcher::class, $container->getDefinition(AllLanguagesIdAndNameFetcher::class)->getClass());
+        self::assertSame(AllLanguagesIdAndNameFetcher::class, (string) $container->getAlias(AllLanguagesIdAndNameFetcherInterface::class));
         self::assertSame(
             YesNoTranslationCaseWhenThenBuilder::class,
             $container->getDefinition(YesNoTranslationCaseWhenThenBuilder::class)->getClass()
