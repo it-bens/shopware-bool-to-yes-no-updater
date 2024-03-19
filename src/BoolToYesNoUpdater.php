@@ -7,25 +7,18 @@ namespace ITB\ShopwareBoolToYesNoUpdater;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection;
 use ITB\ShopwareBoolToYesNoUpdater\CaseWhenThenBuilder\YesNoTranslationCaseWhenThenBuilderInterface;
-use ITB\ShopwareBoolToYesNoUpdater\Language\AllLanguagesIdAndNameFetcherInterface;
 use Shopware\Core\Framework\DataAbstractionLayer\Doctrine\RetryableQuery;
 
 final class BoolToYesNoUpdater implements BoolToYesNoUpdaterInterface
 {
     public function __construct(
         private readonly Connection $connection,
-        private readonly AllLanguagesIdAndNameFetcherInterface $languagesIdAndNameFetcher,
         private readonly YesNoTranslationCaseWhenThenBuilderInterface $yesNoTranslationCaseWhenThenBuilder,
     ) {
     }
 
-    /**
-     * @param list<string> $ids
-     */
-    public function update(string $entityTable, string $entityTranslationTable, array $fields, array $ids): void
+    public function update(array $languages, string $entityTable, string $entityTranslationTable, array $fields, array $ids): void
     {
-        $languages = $this->languagesIdAndNameFetcher->fetchLanguagesIdAndName();
-
         $updatePart = 'UPDATE `' . $entityTranslationTable . '` ';
         $joinPart = 'INNER JOIN `' . $entityTable . '` ON `' . $entityTable . '`.`id` = `' . $entityTranslationTable . '`.`' . $entityTable . '_id` ';
 

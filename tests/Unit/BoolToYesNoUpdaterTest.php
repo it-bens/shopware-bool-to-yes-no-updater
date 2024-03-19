@@ -98,7 +98,6 @@ final class BoolToYesNoUpdaterTest extends TestCase
     /**
      * @param string[] $fields
      * @param string[] $entityIds
-     * @param array{id: string, name: string}[] $languages
      */
     #[DataProvider('updateProvider')]
     public function testUpdate(
@@ -108,19 +107,19 @@ final class BoolToYesNoUpdaterTest extends TestCase
         string $entityTranslationTable,
         array $fields,
         array $entityIds,
-        array $languages,
+        array $expectedLanguages,
         string $expectedSql
     ): void {
         $connection = self::createStub(Connection::class);
         $connection->method('executeStatement')
             ->willReturnCallback(
-                function (string $sql, array $params, array $types) use ($entityIds, $languages, $expectedSql): void {
+                function (string $sql, array $params, array $types) use ($entityIds, $expectedLanguages, $expectedSql): void {
                     self::assertSame($expectedSql, $sql);
 
-                    self::assertSame($languages[0]['id'], $params['languageId1']);
+                    self::assertSame($expectedLanguages[0]['id'], $params['languageId1']);
                     self::assertSame('Ja', $params['translationYes1']);
                     self::assertSame('Nein', $params['translationNo1']);
-                    self::assertSame($languages[1]['id'], $params['languageId2']);
+                    self::assertSame($expectedLanguages[1]['id'], $params['languageId2']);
                     self::assertSame('Yes', $params['translationYes2']);
                     self::assertSame('No', $params['translationNo2']);
                     self::assertSame($entityIds, $params['ids']);
@@ -129,8 +128,9 @@ final class BoolToYesNoUpdaterTest extends TestCase
                 }
             );
 
-        $updater = new BoolToYesNoUpdater($connection, $languagesIdAndNameFetcher, $yesNoTranslationCaseWhenThenBuilder);
+        $updater = new BoolToYesNoUpdater($connection, $yesNoTranslationCaseWhenThenBuilder);
+        $languages = $languagesIdAndNameFetcher->fetchLanguagesIdAndName();
 
-        $updater->update($entityTable, $entityTranslationTable, $fields, $entityIds);
+        $updater->update($languages, $entityTable, $entityTranslationTable, $fields, $entityIds);
     }
 }

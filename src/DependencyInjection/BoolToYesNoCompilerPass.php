@@ -53,7 +53,6 @@ final class BoolToYesNoCompilerPass implements CompilerPassInterface
 
         $boolToYesNoUpdaterDefinition = new Definition(BoolToYesNoUpdater::class, [
             '$connection' => new Reference(Connection::class),
-            '$languagesIdAndNameFetcher' => new Reference(AllLanguagesIdAndNameFetcherInterface::class),
             '$yesNoTranslationCaseWhenThenBuilder' => new Reference(YesNoTranslationCaseWhenThenBuilderInterface::class),
         ]);
         $container->setDefinition(BoolToYesNoUpdater::class, $boolToYesNoUpdaterDefinition);
