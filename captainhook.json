@@ -1,8 +1,4 @@
 {
-    "config": {
-        "run-mode": "docker",
-        "run-exec": "docker compose run --rm shopware-plugin-dev"
-    },
     "commit-msg": {
         "enabled": true,
         "actions": []
