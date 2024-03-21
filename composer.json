@@ -11,7 +11,7 @@
   ],
   "require": {
     "php": "^8.1",
-    "it-bens/simple-words-translator": "^0.1",
+    "it-bens/simple-words-translator": "^0.2",
     "shopware/core": "^6.5"
   },
   "require-dev": {
