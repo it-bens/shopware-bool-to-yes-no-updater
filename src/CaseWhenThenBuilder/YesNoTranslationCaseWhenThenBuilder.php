@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ITB\ShopwareBoolToYesNoUpdater\CaseWhenThenBuilder;
 
+use ITB\SimpleWordsTranslator\Exception\NoTranslationFoundForNameException;
 use ITB\SimpleWordsTranslator\TranslatorByNameInterface;
 
 final class YesNoTranslationCaseWhenThenBuilder implements YesNoTranslationCaseWhenThenBuilderInterface
@@ -19,6 +20,7 @@ final class YesNoTranslationCaseWhenThenBuilder implements YesNoTranslationCaseW
         string $entityField,
         mixed $defaultValue,
         array $languages,
+        string $defaultLanguageName,
         array &$parameters
     ): string {
         $caseWhenThen = 'CASE ';
@@ -27,8 +29,16 @@ final class YesNoTranslationCaseWhenThenBuilder implements YesNoTranslationCaseW
             $caseWhenThen .= 'WHEN HEX(`' . $entityTranslationTable . '`.`language_id`) = :languageId' . $i . ' AND `' . $entityTable . '`.`' . $entityField . '` = 0 THEN :translationNo' . $i . ' ';
 
             $parameters['languageId' . $i] = $language['id'];
-            $parameters['translationYes' . $i] = $this->translator->yes($language['name']);
-            $parameters['translationNo' . $i] = $this->translator->no($language['name']);
+            try {
+                $parameters['translationYes' . $i] = $this->translator->yes($language['name']);
+            } catch (NoTranslationFoundForNameException) {
+                $parameters['translationYes' . $i] = $this->translator->yes($defaultLanguageName);
+            }
+            try {
+                $parameters['translationNo' . $i] = $this->translator->no($language['name']);
+            } catch (NoTranslationFoundForNameException) {
+                $parameters['translationNo' . $i] = $this->translator->no($defaultLanguageName);
+            }
         }
         $caseWhenThen .= 'ELSE :default_for_' . $entityField . ' ';
         $parameters['default_for_' . $entityField] = $defaultValue;

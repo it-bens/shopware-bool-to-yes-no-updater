@@ -10,6 +10,7 @@ use Generator;
 use ITB\ShopwareBoolToYesNoUpdater\BoolToYesNoUpdater;
 use ITB\ShopwareBoolToYesNoUpdater\CaseWhenThenBuilder\YesNoTranslationCaseWhenThenBuilderInterface;
 use ITB\ShopwareBoolToYesNoUpdater\Language\AllLanguagesIdAndNameFetcherInterface;
+use ITB\SimpleWordsTranslator\Translation\De;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -62,6 +63,7 @@ final class BoolToYesNoUpdaterTest extends TestCase
                 string $entityField,
                 mixed $defaultValue,
                 array $languages,
+                string $defaultLanguage,
                 array &$parameters
             ) use ($fields, $caseWhenThens) {
                 $parameters['languageId1'] = 'a7d3c3773f374092881a6f637cc3e33c';
@@ -86,6 +88,7 @@ final class BoolToYesNoUpdaterTest extends TestCase
         yield [
             $languagesIdAndNameFetcher,
             $yesNoTranslationCaseWhenThenBuilder,
+            De::name(),
             $entityTable,
             $entityTranslationTable,
             $fields,
@@ -103,6 +106,7 @@ final class BoolToYesNoUpdaterTest extends TestCase
     public function testUpdate(
         AllLanguagesIdAndNameFetcherInterface $languagesIdAndNameFetcher,
         YesNoTranslationCaseWhenThenBuilderInterface $yesNoTranslationCaseWhenThenBuilder,
+        string $defaultLanguage,
         string $entityTable,
         string $entityTranslationTable,
         array $fields,
@@ -131,6 +135,6 @@ final class BoolToYesNoUpdaterTest extends TestCase
         $updater = new BoolToYesNoUpdater($connection, $yesNoTranslationCaseWhenThenBuilder);
         $languages = $languagesIdAndNameFetcher->fetchLanguagesIdAndName();
 
-        $updater->update($languages, $entityTable, $entityTranslationTable, $fields, $entityIds);
+        $updater->update($languages, $defaultLanguage, $entityTable, $entityTranslationTable, $fields, $entityIds);
     }
 }

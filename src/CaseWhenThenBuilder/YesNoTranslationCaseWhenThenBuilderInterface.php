@@ -16,6 +16,7 @@ interface YesNoTranslationCaseWhenThenBuilderInterface
         string $entityField,
         mixed $defaultValue,
         array $languages,
+        string $defaultLanguageName,
         array &$parameters,
     ): string;
 }

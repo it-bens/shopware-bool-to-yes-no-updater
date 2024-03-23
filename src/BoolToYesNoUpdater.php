@@ -17,8 +17,14 @@ final class BoolToYesNoUpdater implements BoolToYesNoUpdaterInterface
     ) {
     }
 
-    public function update(array $languages, string $entityTable, string $entityTranslationTable, array $fields, array $ids): void
-    {
+    public function update(
+        array $languages,
+        string $defaultLanguage,
+        string $entityTable,
+        string $entityTranslationTable,
+        array $fields,
+        array $ids
+    ): void {
         $updatePart = 'UPDATE `' . $entityTranslationTable . '` ';
         $joinPart = 'INNER JOIN `' . $entityTable . '` ON `' . $entityTable . '`.`id` = `' . $entityTranslationTable . '`.`' . $entityTable . '_id` ';
 
@@ -31,6 +37,7 @@ final class BoolToYesNoUpdater implements BoolToYesNoUpdaterInterface
                 $field,
                 null,
                 $languages,
+                $defaultLanguage,
                 $parameters
             );
             $setParts[] = $entityTranslationTable . '.' . $field . ' = ' . $caseWhen;

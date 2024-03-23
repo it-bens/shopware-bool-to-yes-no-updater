@@ -11,5 +11,12 @@ interface BoolToYesNoUpdaterInterface
      * @param list<string> $fields
      * @param list<string> $ids
      */
-    public function update(array $languages, string $entityTable, string $entityTranslationTable, array $fields, array $ids): void;
+    public function update(
+        array $languages,
+        string $defaultLanguage,
+        string $entityTable,
+        string $entityTranslationTable,
+        array $fields,
+        array $ids
+    ): void;
 }
